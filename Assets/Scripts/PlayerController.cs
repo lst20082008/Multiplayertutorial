@@ -39,22 +39,21 @@ public class PlayerController : MonoBehaviour {
 
 		if(currentPosition != oldPosition)
 		{
-			//TODO networking
+            NetworkManager.instance.GetComponent<NetworkManager>().CommandMove(transform.position);
 			oldPosition = currentPosition;
 		}
 
 		if (currentRotation != oldRotation) 
 		{
-			//TODO networking
-			oldRotation = currentRotation;
+            NetworkManager.instance.GetComponent<NetworkManager>().CommandTurn(transform.rotation);
+            oldRotation = currentRotation;
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) 
 		{
-			//TODO networking
-			//n.CommandShott();
-			CmdFire();
-		}
+            NetworkManager n = NetworkManager.instance.GetComponent<NetworkManager>();
+            n.CommandShoot();
+        }
 	}
 
 	public void CmdFire()

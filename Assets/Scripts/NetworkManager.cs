@@ -63,6 +63,32 @@ public class NetworkManager : MonoBehaviour {
         canvas.gameObject.SetActive(false);
     }
 
+    public void CommandMove(Vector3 vec3)
+    {
+        string data = JsonUtility.ToJson(new PositionJSON(vec3));
+        socket.Emit("player move",new JSONObject(data));
+    }
+
+    public void CommandTurn(Quaternion quar)
+    {
+        string data = JsonUtility.ToJson(new RotationJSON(quar));
+        socket.Emit("player turn",new JSONObject(data));
+    }
+
+    public void CommandShoot()
+    {
+        print("Shoot");
+        socket.Emit("player shoot");
+    }
+
+    public void CommandHealthChange(GameObject playerFrom, GameObject playerTo, int healthChange, bool isEnemy)
+    {
+        print("health change Cmd");
+        HealthChangeJSON healthChangeJSON = new HealthChangeJSON(playerTo.name,healthChange,playerFrom.name,isEnemy);
+        socket.Emit("health",new JSONObject(JsonUtility.ToJson(healthChangeJSON)));
+    }
+
+
     #endregion
 
     #region Listening
@@ -121,22 +147,51 @@ public class NetworkManager : MonoBehaviour {
 
     void OnPlayerMove(SocketIOEvent socketIOEvent)
     {
-
+        string data = socketIOEvent.data.ToString();
+        UserJSON userJSON = UserJSON.CreateFromJSON(data);
+        Vector3 position = new Vector3(userJSON.position[0], userJSON.position[1], userJSON.position[2]);
+        //if it's the current player exit
+        if (userJSON.name == playerNameInput.text)
+            return;
+        GameObject p = GameObject.Find(userJSON.name) as GameObject;
+        if (p != null)
+            p.transform.position = position;
     }
 
     void OnPlayerTurn(SocketIOEvent socketIOEvent)
     {
-
+        string data = socketIOEvent.data.ToString();
+        UserJSON userJSON = UserJSON.CreateFromJSON(data);
+        Quaternion rotation = Quaternion.Euler(userJSON.rotation[0], userJSON.rotation[1], userJSON.rotation[2]);
+        //if it's the current player exit
+        if (userJSON.name == playerNameInput.text)
+            return;
+        GameObject p = GameObject.Find(userJSON.name) as GameObject;
+        if (p != null)
+            p.transform.rotation = rotation;
     }
 
     void OnPlayerShoot(SocketIOEvent socketIOEvent)
     {
-
+        string data = socketIOEvent.data.ToString();
+        ShootJSON shootJSON = ShootJSON.CreatFromJSON(data);
+        //find the gameobject
+        GameObject p = GameObject.Find(shootJSON.name);
+        //instantiate the bullet etc from the player script
+        PlayerController pc = p.GetComponent<PlayerController>();
+        pc.CmdFire();
     }
 
     void OnHealth(SocketIOEvent socketIOEvent)
     {
-
+        print("changing the health");
+        //get the name of player whose health change
+        string data = socketIOEvent.data.ToString();
+        UserHealthJSON userHealthJSON = UserHealthJSON.CreateFromJSON(data);
+        GameObject p = GameObject.Find(userHealthJSON.name);
+        Health h = p.GetComponent<Health>();
+        h.currentHealth = userHealthJSON.health;
+        h.OnChangeHealth();
     }
 
     void OnOtherPlayerDisconnect(SocketIOEvent socketIOEvent)

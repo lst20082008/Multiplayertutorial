@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multiplayertutorial", "Multiplayertutorial.csproj", "{AD9759F1-A1FB-1D91-B31D-1A6E7B74B356}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multiplayertutorial.Editor", "Multiplayertutorial.Editor.csproj", "{BFEFECE8-9E88-8C17-A903-BBA0B0EE0324}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD9759F1-A1FB-1D91-B31D-1A6E7B74B356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD9759F1-A1FB-1D91-B31D-1A6E7B74B356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD9759F1-A1FB-1D91-B31D-1A6E7B74B356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD9759F1-A1FB-1D91-B31D-1A6E7B74B356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFEFECE8-9E88-8C17-A903-BBA0B0EE0324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFEFECE8-9E88-8C17-A903-BBA0B0EE0324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFEFECE8-9E88-8C17-A903-BBA0B0EE0324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFEFECE8-9E88-8C17-A903-BBA0B0EE0324}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
